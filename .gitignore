@@ -1,5 +1,6 @@
 .idea/
 /out/
+db/
 .idea_modules/
 atlassian-ide-plugin.xml
 
