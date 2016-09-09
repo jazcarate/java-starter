@@ -1,5 +1,6 @@
 package com.tenpines.starter;
 
+import com.tenpines.starter.modelo.Mensaje;
 import com.tenpines.starter.repositorios.RepositorioDeMensajes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,14 +17,14 @@ public class HelloWorldController {
 
     @RequestMapping("/")
     String home(Model model) {
-        model.addAttribute("mensajes", repo.encontrarTodos());
+        model.addAttribute("mensajes", repo.findAll());
         return "hola";
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET, params = "mensaje")
     @ResponseBody
     String agregar(@RequestParam String mensaje){
-        repo.agregar(mensaje);
+        repo.save(new Mensaje(mensaje));
         return "Exito!";
     }
 }

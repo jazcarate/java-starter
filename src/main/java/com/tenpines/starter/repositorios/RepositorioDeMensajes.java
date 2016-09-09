@@ -1,23 +1,10 @@
 package com.tenpines.starter.repositorios;
 
-import org.springframework.stereotype.Repository;
+import com.tenpines.starter.modelo.Mensaje;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
+@Transactional
+public interface RepositorioDeMensajes extends CrudRepository<Mensaje, Long> {
 
-@Repository
-public class RepositorioDeMensajes {
-    private List<String> mensajes;
-
-    RepositorioDeMensajes(){
-        mensajes = new ArrayList<String>();
-    }
-
-    public List<String> encontrarTodos() {
-        return mensajes;
-    }
-
-    public void agregar(String mensaje) {
-        mensajes.add(mensaje);
-    }
 }
