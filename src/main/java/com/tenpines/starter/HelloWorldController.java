@@ -1,7 +1,8 @@
 package com.tenpines.starter;
 
 import com.tenpines.starter.modelo.Mensaje;
-import com.tenpines.starter.repositorios.RepositorioDeMensajes;
+import com.tenpines.starter.servicios.ServicioDeMensajes;
+import com.tenpines.starter.web.Endpoints;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,21 +11,33 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 @Controller
 public class HelloWorldController {
-    @Autowired
-    private RepositorioDeMensajes repo;
+    private ServicioDeMensajes servicio;
 
-    @RequestMapping("/")
+    @Autowired
+    public HelloWorldController(ServicioDeMensajes servicioDeMensajes) {
+        this.servicio = servicioDeMensajes;
+    }
+
+    @RequestMapping(Endpoints.HOME)
     String home(Model model) {
-        model.addAttribute("mensajes", repo.findAll());
+        model.addAttribute("mensajes", obtener());
         return "hola";
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET, params = "mensaje")
+    @RequestMapping(value = Endpoints.AGREGAR_MENSAJE, method = RequestMethod.POST, params = "mensaje")
     @ResponseBody
     String agregar(@RequestParam String mensaje){
-        repo.save(new Mensaje(mensaje));
+        servicio.almacenar(mensaje);
         return "Exito!";
+    }
+
+    @RequestMapping(value = Endpoints.OBTENER_MENSAJES, method = RequestMethod.GET)
+    @ResponseBody
+    List<Mensaje> obtener(){
+        return servicio.buscarTodos();
     }
 }

@@ -9,6 +9,7 @@
     <title>HELLO</title>
 </head>
 <body>
+    <h1>Mensajes</h1>
     <c:forEach items="${mensajes}" var="mensaje">
         <p>${mensaje}</p>
     </c:forEach>

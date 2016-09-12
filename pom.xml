@@ -54,6 +54,13 @@
             <artifactId>h2</artifactId>
             <version>1.4.192</version>
         </dependency>
+
+        <!-- Tests -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
 </project>
