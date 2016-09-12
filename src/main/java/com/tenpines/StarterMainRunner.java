@@ -10,6 +10,7 @@ public class StarterMainRunner extends SpringBootServletInitializer {
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        application.profiles("local");
         return application.sources(StarterMainRunner.class);
     }
 
