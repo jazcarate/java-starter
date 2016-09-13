@@ -10,8 +10,15 @@
 </head>
 <body>
     <h1 id="titulo">Mensajes</h1>
-    <c:forEach items="${mensajes}" var="mensaje">
-        <p>${mensaje}</p>
-    </c:forEach>
+    <ul>
+        <c:forEach items="${mensajes}" var="mensaje">
+            <li class="msj">${mensaje}</li>
+        </c:forEach>
+    </ul>
+
+    <form action="/mensajes" method="post">
+        <input name="mensaje">
+        <input type="submit">
+    </form>
 </body>
 </html>
