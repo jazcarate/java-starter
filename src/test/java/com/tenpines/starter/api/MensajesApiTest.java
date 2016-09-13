@@ -1,4 +1,4 @@
-package com.tenpines.starter;
+package com.tenpines.starter.api;
 
 import com.tenpines.starter.integracion.RESTTestBase;
 import com.tenpines.starter.modelo.Mensaje;

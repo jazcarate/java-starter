@@ -1,4 +1,4 @@
-package com.tenpines.starter;
+package com.tenpines.starter.model;
 
 import com.tenpines.starter.integracion.SpringTestBase;
 import com.tenpines.starter.servicios.ServicioDeMensajes;

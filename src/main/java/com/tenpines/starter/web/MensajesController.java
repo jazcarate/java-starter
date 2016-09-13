@@ -1,9 +1,8 @@
-package com.tenpines.starter;
+package com.tenpines.starter.web;
 
 import com.tenpines.starter.modelo.Mensaje;
 import com.tenpines.starter.rest.AgregarRequest;
 import com.tenpines.starter.servicios.ServicioDeMensajes;
-import com.tenpines.starter.web.Endpoints;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,11 +14,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 @Controller
-public class HelloWorldController {
+public class MensajesController {
     private ServicioDeMensajes servicio;
 
     @Autowired
-    public HelloWorldController(ServicioDeMensajes servicioDeMensajes) {
+    public MensajesController(ServicioDeMensajes servicioDeMensajes) {
         this.servicio = servicioDeMensajes;
     }
 
