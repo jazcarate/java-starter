@@ -1,14 +1,15 @@
 package com.tenpines.starter;
 
 import com.tenpines.starter.modelo.Mensaje;
+import com.tenpines.starter.rest.AgregarRequest;
 import com.tenpines.starter.servicios.ServicioDeMensajes;
 import com.tenpines.starter.web.Endpoints;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -28,14 +29,14 @@ public class HelloWorldController {
         return "hola";
     }
 
-    @RequestMapping(value = Endpoints.AGREGAR_MENSAJE, method = RequestMethod.POST, params = "mensaje")
+    @RequestMapping(value = Endpoints.AGREGAR_MENSAJE, method = RequestMethod.POST)
     @ResponseBody
-    String agregar(@RequestParam String mensaje){
-        servicio.almacenar(mensaje);
+    String agregar(@RequestBody AgregarRequest mensaje){
+        servicio.almacenar(mensaje.getMensaje());
         return "Exito!";
     }
 
-    @RequestMapping(value = Endpoints.OBTENER_MENSAJES, method = RequestMethod.GET)
+    @RequestMapping(value = Endpoints.OBTENER_MENSAJES, method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     List<Mensaje> obtener(){
         return servicio.buscarTodos();

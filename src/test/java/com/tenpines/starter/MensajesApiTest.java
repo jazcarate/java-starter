@@ -1,45 +1,40 @@
 package com.tenpines.starter;
 
-import com.tenpines.starter.integracion.SpringTestBase;
+import com.tenpines.starter.integracion.RESTTestBase;
 import com.tenpines.starter.modelo.Mensaje;
 import com.tenpines.starter.servicios.ServicioDeMensajes;
 import com.tenpines.starter.web.Endpoints;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
-import java.util.Collections;
+import java.util.Arrays;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.*;
+import static org.hamcrest.Matchers.contains;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-public class MensajesApiTest extends SpringTestBase {
+public class MensajesApiTest extends RESTTestBase {
 
     @MockBean
     private ServicioDeMensajes servicioDeMensajes;
 
-    @Autowired
-    private TestRestTemplate restTemplate;
-
     @Test
     public void agregar() throws Exception {
-        Mensaje unMensaje = new Mensaje("lala");
-        when(servicioDeMensajes.buscarTodos()).thenReturn(Collections.singletonList(unMensaje));
+        String textoMensaje1 = "uno";
+        String textoMensaje2 = "otro";
+        Mensaje unMensaje = new Mensaje(textoMensaje1);
+        Mensaje otroMensaje = new Mensaje(textoMensaje2);
 
+        Mockito.when(servicioDeMensajes.buscarTodos()).thenReturn(Arrays.asList(unMensaje, otroMensaje));
 
-        ResponseEntity<Mensaje[]> respuesta = this.restTemplate.getForEntity(
-                Endpoints.OBTENER_MENSAJES, Mensaje[].class);
+        this.mockClient.perform(get(Endpoints.OBTENER_MENSAJES))
+                .andExpect(content().contentType(JSON_CONTENT_TYPE))
+                .andExpect(status().is(200))
+                .andExpect(jsonPath("$..mensaje").value(contains(textoMensaje1, textoMensaje2)));
 
-
-        assertThat(respuesta.getStatusCode(), is(HttpStatus.OK));
-        //assertThat(respuesta.getBody(), hasItems("lala"));
-
-        verify(servicioDeMensajes, times(1)).buscarTodos();
-        verifyNoMoreInteractions(servicioDeMensajes);
+        Mockito.verify(servicioDeMensajes, Mockito.times(1)).buscarTodos();
+        Mockito.verifyNoMoreInteractions(servicioDeMensajes);
     }
 
 }
